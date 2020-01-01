@@ -1,7 +1,13 @@
 package com.revature.controller;
 
 import java.sql.Connection;
+import org.apache.log4j.Logger;
+import com.revature.controller.menus.CreateAccountMenu;
+import com.revature.controller.menus.LoginMenu;
+import com.revature.controller.menus.Menu;
+import com.revature.controller.menus.StartMenu;
 import com.revature.exception.MenuFailedException;
+import com.revature.model.User;
 import com.revature.repository.ConnectionToDatabase;
 
 public class Controller {
@@ -9,41 +15,49 @@ public class Controller {
   public static Connection connection = null;
 
   private static Menu currentMenu;
+  
+  public static User CurrentUser;
+
+  private static Logger log = Logger.getLogger(Controller.class);
 
   public Controller() {
     super();
-    System.out.println("Controller Established");
-    try {
-      this.moveToMenu(1);
-    } catch (MenuFailedException e) {
-      e.printStackTrace();
-    }
+    log.info("Controller Established");
     this.establishConnection();
+    try {
+      Controller.moveToMenu(0);
+    } catch (MenuFailedException e) {
+      log.error("Failed to Locate Menu", e);
+    }
   }
 
-  public void moveToMenu(int MenuId) throws MenuFailedException {
+  public static void moveToMenu(int MenuId) throws MenuFailedException {
 
+    log.trace("Excecuting menu change, MenuID = " + MenuId);
     switch (MenuId) {
+      case 0: {
+        currentMenu = new StartMenu();
+        currentMenu.start();
+        break;
+      }
       case 1: {
         currentMenu = new LoginMenu();
         currentMenu.start();
         break;
       }
       case 2: {
-        // currentMenu = new OtherMenu();
+        currentMenu = new CreateAccountMenu();
+        currentMenu.start();
+        break;
       }
       default: {
         throw new MenuFailedException();
       }
     }
   }
-  
+
   public void establishConnection() {
-    if (ConnectionToDatabase.establishConnection()) {
-      System.out.println("Connected");
-    } else {
-      System.out.println("Failed To Establish Connection");
-    }
+    ConnectionToDatabase.establishConnection();
   }
 }
 

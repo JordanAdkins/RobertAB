@@ -3,6 +3,7 @@ package com.revature.controller.menus;
 
 import org.apache.log4j.Logger;
 import com.revature.controller.Controller;
+import com.revature.exception.MenuFailedException;
 import com.revature.service.AccountCreation;
 
 public class CreateAccountMenu implements Menu {
@@ -23,6 +24,12 @@ public class CreateAccountMenu implements Menu {
     System.out.println("Welcome to the account creation menu");
     log.debug("Accessing Acount Creation Wizard");
     Controller.CurrentUser = AccountCreation.accountCreationWizard();
+    try {
+      Controller.moveToMenu(UserDashboardMenu.getMenuId());
+    } catch (MenuFailedException e) {
+      log.fatal("Menu Not found, closing program to prevent data loss");
+      System.exit(1);
+    }
   }
 
   /**

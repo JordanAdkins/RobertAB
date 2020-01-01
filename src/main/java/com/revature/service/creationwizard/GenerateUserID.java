@@ -33,6 +33,15 @@ public class GenerateUserID {
       ResultSet rs = stmt.getResultSet();
       rs.next();
       userID = rs.getInt(1);
+      log.debug("Successfully retrieved unique userID");
+      log.debug("Inserting SSID into its table with SQL");
+      stmt = Controller.connection.prepareStatement(
+          "INSERT INTO ssid_table(user_ssid, userid) VALUES (?,?)");
+      stmt.setInt(1, SSID);
+      stmt.setInt(2, userID);
+      stmt.execute();
+      log.trace("inserting into SSID table successful");
+      
     } catch (Exception e) {
       log.fatal("failed to insert user information into database, closing program for data safety");
       System.exit(1);

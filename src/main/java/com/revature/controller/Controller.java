@@ -6,6 +6,7 @@ import com.revature.controller.menus.CreateAccountMenu;
 import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
 import com.revature.controller.menus.StartMenu;
+import com.revature.controller.menus.UserDashboardMenu;
 import com.revature.exception.MenuFailedException;
 import com.revature.model.User;
 import com.revature.repository.ConnectionToDatabase;
@@ -47,6 +48,11 @@ public class Controller {
       }
       case 2: {
         currentMenu = new CreateAccountMenu();
+        currentMenu.start();
+        break;
+      }
+      case 3: {
+        currentMenu = new UserDashboardMenu();
         currentMenu.start();
         break;
       }

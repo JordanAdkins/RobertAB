@@ -26,10 +26,11 @@ public class AccountCreation {
     String questionAnswer = RequestQuestionAnswer.run(questionId);
     int SSID = RequestSSID.run(); 
     int userID = GenerateUserID.run(username, password, name, questionId, questionAnswer, SSID);
+    
+    User currentUser = new User(userID, username, password, name, questionId, questionAnswer,
+        SSID, 0, 0, false, false, 0, 0);
 
-    System.out.println(username + password + name + questionId + questionAnswer + SSID + userID);
-    System.exit(0);
-    return null;
+    return currentUser;
   }
 
 }

@@ -18,6 +18,7 @@ public class ScanForUserInput {
     if(inputedString.equalsIgnoreCase("0")) {
       log.debug("User has entered 0, creating new controller object");
       System.out.println("Logging out, one moment...");
+      @SuppressWarnings("unused")
       Controller restart = new Controller();
     }
     if(inputedString.equalsIgnoreCase("Close Program")) {

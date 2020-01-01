@@ -38,6 +38,7 @@ public class RequestSSID {
         } catch (Exception e) {
           log.fatal(
               "Fatal Error Occured when attempting to parseint from SSIDattempt, returning to start");
+          @SuppressWarnings("unused")
           Controller controller = new Controller();
         }
 

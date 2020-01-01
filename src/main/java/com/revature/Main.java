@@ -1,7 +1,7 @@
 package com.revature;
 
 import com.revature.controller.Controller;
-import com.revature.exception.MenuFailedException;
+
 
 /** 
  * Create an instance of your controller and launch your application.
@@ -12,7 +12,8 @@ public class Main {
 
 	public static void main(String[] args) {
 	  
-	  Controller controller = new Controller();
+	  @SuppressWarnings("unused")
+    Controller controller = new Controller();
 
 	}
 }

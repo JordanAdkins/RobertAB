@@ -7,23 +7,23 @@ import com.revature.service.CheckingAccountManager;
 import com.revature.service.SavingAccountManager;
 import com.revature.service.ScanForUserInput;
 
-public class DepositMoneyMenu implements Menu {
+public class InternalTransferMenu implements Menu {
 
-  private static Logger log = Logger.getLogger(DepositMoneyMenu.class);
+  private static Logger log = Logger.getLogger(InternalTransferMenu.class);
 
-  public DepositMoneyMenu() {
-    log.trace("DepositMoneyMenu Created");
+  public InternalTransferMenu() {
+    log.trace("InternalTransferMenu Created");
   }
 
   public static int getMenuId() {
-    return 4;
+    return 6;
   }
 
   @Override
   public void start() {
-    log.trace("DepositMoneymenu Started");
-    System.out.println("Welcome to the deposit menu");
-    System.out.println("Which account would you like to deposit money into?");
+    log.trace("InternalTransferMenu Started");
+    System.out.println("Welcome to the Internal Transfer menu");
+    System.out.println("From which account would you like to withdraw money from?");
     if (Controller.CurrentUser.isUserHasCheckingAccount()
         & Controller.CurrentUser.isUserHasSavingAccount()) {
       System.out.println(
@@ -51,19 +51,19 @@ public class DepositMoneyMenu implements Menu {
           int inputAsInt = Integer.parseInt(inputedString);
           if (inputAsInt == 1 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInChecking();
+            this.transferFromChecking();
           }
           if (inputAsInt == 2 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInSaving();
+            this.transferFromSaving();
           }
           if (inputAsInt == 1 & Controller.CurrentUser.isUserHasCheckingAccount()
               & !Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInChecking();
+            this.transferFromChecking();
           }
           if (inputAsInt == 1 & !Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInSaving();
+            this.transferFromSaving();
           }
           log.error("Invalid input received, trying again");
           System.out.println("Please make a valid selection");
@@ -75,32 +75,29 @@ public class DepositMoneyMenu implements Menu {
     }
   }
 
-  private void depositInChecking() {
-    if (CheckingAccountManager.deposit()) {
-      System.out.println("Thank you for your deposit, returning to the dashboard.");
+  public void transferFromChecking() {
+
+    if (CheckingAccountManager.transferToSaving()) {
+      System.out.println("Thank you for your transfer. Moving to the dashboard...");
       try {
         Controller.moveToMenu(UserDashboardMenu.getMenuId());
       } catch (MenuFailedException e) {
-        log.fatal("failed to locate Menu, closing program to preserve data");
+        log.error("Failed to move to new menu, closing software to prevent data loss");
         System.exit(1);
       }
     }
-    log.fatal("depositing failed, closing program to preserver data integrity");
-    System.exit(1);
   }
 
-  private void depositInSaving() {
-    if (SavingAccountManager.deposit()) {
-      System.out.println("Thank you for your deposit, returning to the dashboard.");
+  public void transferFromSaving() {
+
+    if (SavingAccountManager.transferToChecking()) {
+      System.out.println("Thank you for your transfer. Moving to the dashboard...");
       try {
         Controller.moveToMenu(UserDashboardMenu.getMenuId());
       } catch (MenuFailedException e) {
-        log.fatal("failed to locate Menu, closing program to preserve data");
+        log.error("Failed to move to new menu, closing software to prevent data loss");
         System.exit(1);
       }
     }
-    log.fatal("depositing failed, closing program to preserver data integrity");
-    System.exit(1);
   }
-
 }

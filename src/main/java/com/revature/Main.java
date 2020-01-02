@@ -3,6 +3,7 @@ package com.revature;
 import com.revature.controller.Controller;
 
 
+
 /** 
  * Create an instance of your controller and launch your application.
  * 
@@ -14,6 +15,5 @@ public class Main {
 	  
 	  @SuppressWarnings("unused")
     Controller controller = new Controller();
-
 	}
 }

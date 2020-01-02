@@ -13,15 +13,15 @@ public class User {
   private int userSavingAccountNumber;
   private boolean userHasSavingAccount = false;
   private boolean userHasCheckingAccount = false;
-  private int userCheckingAccountBalance;
-  private int userSavingAccountBalance;
+  private double userCheckingAccountBalance;
+  private double userSavingAccountBalance;
 
   
 
   public User(int userId, String userLoginId, String userPassword, String userName,
       int userQuestionId, String userQuestionAnswer, int userSSID, int userCheckingAccountNumber,
       int userSavingAccountNumber, boolean userHasSavingAccount, boolean userHasCheckingAccount,
-      int userCheckingAccountBalance, int userSavingAccountBalance) {
+      double userCheckingAccountBalance, double userSavingAccountBalance) {
     super();
     this.userId = userId;
     this.userLoginId = userLoginId;
@@ -218,23 +218,23 @@ public class User {
   /**
    * @return the userCheckingAccountBalance
    */
-  public int getUserCheckingAccountBalance() {
+  public double getUserCheckingAccountBalance() {
     return userCheckingAccountBalance;
   }
 
 
   /**
-   * @param userCheckingAccountBalance the userCheckingAccountBalance to set
+   * @param d the userCheckingAccountBalance to set
    */
-  public void setUserCheckingAccountBalance(int userCheckingAccountBalance) {
-    this.userCheckingAccountBalance = userCheckingAccountBalance;
+  public void setUserCheckingAccountBalance(double d) {
+    this.userCheckingAccountBalance = d;
   }
 
 
   /**
    * @return the userSavingAccountBalance
    */
-  public int getUserSavingAccountBalance() {
+  public double getUserSavingAccountBalance() {
     return userSavingAccountBalance;
   }
 
@@ -242,8 +242,8 @@ public class User {
   /**
    * @param userSavingAccountBalance the userSavingAccountBalance to set
    */
-  public void setUserSavingAccountBalance(int userSavingAccountBalance) {
-    this.userSavingAccountBalance = userSavingAccountBalance;
+  public void setUserSavingAccountBalance(double d) {
+    this.userSavingAccountBalance = d;
   }
 
 

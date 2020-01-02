@@ -31,27 +31,4 @@ public class CreateAccountMenu implements Menu {
       System.exit(1);
     }
   }
-
-  /**
-   * This Method is not used for this menu
-   */
-  @Override
-  public int askForInput() {
-   return -1;
-  }
-  /**
-   * This Method is not used for this menu
-   */
-  @Override
-  public boolean checkValidInput(String input) {
-    return false;
-  }
-  /**
-   * This Method is not used for this menu
-   */
-  @Override
-  public int submitInput(String input) {
-    return 0;
-  }
-
 }

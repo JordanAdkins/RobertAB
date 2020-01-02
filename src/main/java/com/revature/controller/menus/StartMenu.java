@@ -22,7 +22,10 @@ public class StartMenu implements Menu {
   @Override
   public void start() {
     log.trace("Start Menu Started");
-    System.out.println("Welcome to the Start Menu. Please make a selection from the following: ");
+    System.out.println(
+        "Welcome to Robert Ayye Banking software (Rob.A Bank LLC). Anytime during your usage");
+    System.out.println("You may enter 0 to log out, or type: CLOSE PROGRAM to close this program ");
+    System.out.println("Please select from the following: ");
     System.out.println("'1' - Login to existing account");
     System.out.println("'2' - Create new account");
     try {
@@ -32,7 +35,6 @@ public class StartMenu implements Menu {
     }
   }
 
-  @Override
   public int askForInput() {
     boolean lookingForInput = true;
     while (lookingForInput) {
@@ -50,7 +52,6 @@ public class StartMenu implements Menu {
     return 0;
   }
 
-  @Override
   public boolean checkValidInput(String input) {
     input = input.trim();
     if (input.length() == 1) {
@@ -65,7 +66,6 @@ public class StartMenu implements Menu {
     return false;
   }
 
-  @Override
   public int submitInput(String input) {
     input = input.trim();
     int inputAsInt = Integer.parseInt(input);

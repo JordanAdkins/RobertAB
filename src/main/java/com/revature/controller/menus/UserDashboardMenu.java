@@ -5,6 +5,7 @@ import com.revature.controller.Controller;
 import com.revature.service.CreateCheckingAccount;
 import com.revature.service.CreateSavingAccount;
 import com.revature.service.ScanForUserInput;
+import com.revature.service.TOSAuthentication;
 
 public class UserDashboardMenu implements Menu {
 
@@ -21,7 +22,7 @@ public class UserDashboardMenu implements Menu {
   @Override
   public void start() {
     log.trace("UserDashBoardMenu started");
-    System.out.println("Welcome to the Dashboard " + Controller.CurrentUser.getUserName() + ",");
+    System.out.println("Welcome to your Dashboard, " + Controller.CurrentUser.getUserName() + ",");
     if (!Controller.CurrentUser.isUserHasCheckingAccount()
         & !Controller.CurrentUser.isUserHasSavingAccount()) {
       userHasNoAccounts();
@@ -66,13 +67,16 @@ public class UserDashboardMenu implements Menu {
             Controller.moveToMenu(DepositMoneyMenu.getMenuId());
           }
           if (inputAsInt == 2) {
+            Controller.moveToMenu(WithdrawMoneyMenu.getMenuId());
           }
           if (inputAsInt == 3) {
           }
           if (inputAsInt == 4) {
+            Controller.moveToMenu(MenuId);
           }
           if (inputAsInt == 5 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
+            Controller.moveToMenu(InternalTransferMenu.getMenuId());
           }
           if (inputAsInt == 5 & Controller.CurrentUser.isUserHasCheckingAccount()
               & !Controller.CurrentUser.isUserHasSavingAccount()) {
@@ -118,29 +122,41 @@ public class UserDashboardMenu implements Menu {
         try {
           int inputAsInt = Integer.parseInt(inputedString);
           if (inputAsInt == 1) {
-            Controller.CurrentUser.setUserCheckingAccountNumber(
-                CreateCheckingAccount.run(Controller.CurrentUser.getUserId()));
-            Controller.CurrentUser.setUserHasCheckingAccount(true);
-            System.out.println("Checking Account successfully created. Returning to Dashboard");
-            return true;
+            if (TOSAuthentication.getTOSAgreement()) {
+              Controller.CurrentUser.setUserCheckingAccountNumber(
+                  CreateCheckingAccount.run(Controller.CurrentUser.getUserId()));
+              Controller.CurrentUser.setUserHasCheckingAccount(true);
+              System.out.println("Checking Account successfully created. Returning to Dashboard");
+              return true;
+            } else {
+              Controller.moveToMenu(UserDashboardMenu.getMenuId());
+            }
           }
           if (inputAsInt == 2) {
-            Controller.CurrentUser.setUserSavingAccountNumber(
-                CreateSavingAccount.run(Controller.CurrentUser.getUserId()));
-            Controller.CurrentUser.setUserHasSavingAccount(true);
-            System.out.println("Saving Account successfully created. Returning to Dashboard");
-            return true;
+            if (TOSAuthentication.getTOSAgreement()) {
+              Controller.CurrentUser.setUserSavingAccountNumber(
+                  CreateSavingAccount.run(Controller.CurrentUser.getUserId()));
+              Controller.CurrentUser.setUserHasSavingAccount(true);
+              System.out.println("Saving Account successfully created. Returning to Dashboard");
+              return true;
+            } else {
+              Controller.moveToMenu(UserDashboardMenu.getMenuId());
+            }
           }
           if (inputAsInt == 3) {
-            Controller.CurrentUser.setUserCheckingAccountNumber(
-                CreateCheckingAccount.run(Controller.CurrentUser.getUserId()));
-            Controller.CurrentUser.setUserHasCheckingAccount(true);
-            Controller.CurrentUser.setUserSavingAccountNumber(
-                CreateSavingAccount.run(Controller.CurrentUser.getUserId()));
-            Controller.CurrentUser.setUserHasSavingAccount(true);
-            System.out.println(
-                "Checking Account and Saving Account successfully created. Returning to Dashboard");
-            return true;
+            if (TOSAuthentication.getTOSAgreement()) {
+              Controller.CurrentUser.setUserCheckingAccountNumber(
+                  CreateCheckingAccount.run(Controller.CurrentUser.getUserId()));
+              Controller.CurrentUser.setUserHasCheckingAccount(true);
+              Controller.CurrentUser.setUserSavingAccountNumber(
+                  CreateSavingAccount.run(Controller.CurrentUser.getUserId()));
+              Controller.CurrentUser.setUserHasSavingAccount(true);
+              System.out.println(
+                  "Checking Account and Saving Account successfully created. Returning to Dashboard");
+              return true;
+            } else {
+              Controller.moveToMenu(UserDashboardMenu.getMenuId());
+            }
           }
         } catch (Exception e) {
         }
@@ -149,23 +165,4 @@ public class UserDashboardMenu implements Menu {
     }
     return false;
   }
-
-  @Override
-  public int askForInput() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public boolean checkValidInput(String input) {
-    // TODO Auto-generated method stub
-    return false;
-  }
-
-  @Override
-  public int submitInput(String input) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
 }

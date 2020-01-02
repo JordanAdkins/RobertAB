@@ -4,10 +4,12 @@ import java.sql.Connection;
 import org.apache.log4j.Logger;
 import com.revature.controller.menus.CreateAccountMenu;
 import com.revature.controller.menus.DepositMoneyMenu;
+import com.revature.controller.menus.InternalTransferMenu;
 import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
 import com.revature.controller.menus.StartMenu;
 import com.revature.controller.menus.UserDashboardMenu;
+import com.revature.controller.menus.WithdrawMoneyMenu;
 import com.revature.exception.MenuFailedException;
 import com.revature.model.User;
 import com.revature.repository.ConnectionToDatabase;
@@ -60,6 +62,17 @@ public class Controller {
       case 4: {
         currentMenu = new DepositMoneyMenu();
         currentMenu.start();
+        break;
+      }
+      case 5: {
+        currentMenu = new WithdrawMoneyMenu();
+        currentMenu.start();
+        break;
+      }
+      case 6: {
+        currentMenu = new InternalTransferMenu();
+        currentMenu.start();
+        break;
       }
       default: {
         throw new MenuFailedException();
@@ -69,6 +82,7 @@ public class Controller {
 
   public void establishConnection() {
     ConnectionToDatabase.establishConnection();
+    
   }
 }
 

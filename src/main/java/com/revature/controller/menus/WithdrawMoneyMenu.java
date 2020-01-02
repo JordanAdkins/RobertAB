@@ -7,23 +7,23 @@ import com.revature.service.CheckingAccountManager;
 import com.revature.service.SavingAccountManager;
 import com.revature.service.ScanForUserInput;
 
-public class DepositMoneyMenu implements Menu {
-
+public class WithdrawMoneyMenu implements Menu {
+  
   private static Logger log = Logger.getLogger(DepositMoneyMenu.class);
 
-  public DepositMoneyMenu() {
-    log.trace("DepositMoneyMenu Created");
+  public WithdrawMoneyMenu() {
+    log.trace("WithdrawMoneyMenu Created");
   }
-
+  
   public static int getMenuId() {
-    return 4;
+    return 5;
   }
 
   @Override
   public void start() {
-    log.trace("DepositMoneymenu Started");
-    System.out.println("Welcome to the deposit menu");
-    System.out.println("Which account would you like to deposit money into?");
+    log.trace("WithdrawMoneyMenu Started");
+    System.out.println("Welcome to the withdraw menu");
+    System.out.println("Which account would you like to withdraw money from?");
     if (Controller.CurrentUser.isUserHasCheckingAccount()
         & Controller.CurrentUser.isUserHasSavingAccount()) {
       System.out.println(
@@ -51,19 +51,19 @@ public class DepositMoneyMenu implements Menu {
           int inputAsInt = Integer.parseInt(inputedString);
           if (inputAsInt == 1 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInChecking();
+            this.withdrawFromChecking();
           }
           if (inputAsInt == 2 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInSaving();
+            this.withdrawFromSaving();
           }
           if (inputAsInt == 1 & Controller.CurrentUser.isUserHasCheckingAccount()
               & !Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInChecking();
+            this.withdrawFromChecking();
           }
           if (inputAsInt == 1 & !Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {
-            this.depositInSaving();
+            this.withdrawFromSaving();
           }
           log.error("Invalid input received, trying again");
           System.out.println("Please make a valid selection");
@@ -73,11 +73,26 @@ public class DepositMoneyMenu implements Menu {
         }
       }
     }
-  }
 
-  private void depositInChecking() {
-    if (CheckingAccountManager.deposit()) {
-      System.out.println("Thank you for your deposit, returning to the dashboard.");
+  }
+  
+  private void withdrawFromChecking() {
+    if (CheckingAccountManager.withdraw()) {
+      System.out.println("Thank you for your withdraw, returning to the dashboard.");
+      try {
+        Controller.moveToMenu(UserDashboardMenu.getMenuId());
+      } catch (MenuFailedException e) {
+        log.fatal("failed to locate Menu, closing program to preserve data");
+        System.exit(1);
+      }
+    }
+    log.fatal("depositing failed, closing program to preserver data integrity");
+    System.exit(1);  
+  }
+  
+  private void withdrawFromSaving() {
+    if (SavingAccountManager.withdraw()) {
+      System.out.println("Thank you for your withdraw, returning to the dashboard.");
       try {
         Controller.moveToMenu(UserDashboardMenu.getMenuId());
       } catch (MenuFailedException e) {
@@ -88,19 +103,4 @@ public class DepositMoneyMenu implements Menu {
     log.fatal("depositing failed, closing program to preserver data integrity");
     System.exit(1);
   }
-
-  private void depositInSaving() {
-    if (SavingAccountManager.deposit()) {
-      System.out.println("Thank you for your deposit, returning to the dashboard.");
-      try {
-        Controller.moveToMenu(UserDashboardMenu.getMenuId());
-      } catch (MenuFailedException e) {
-        log.fatal("failed to locate Menu, closing program to preserve data");
-        System.exit(1);
-      }
-    }
-    log.fatal("depositing failed, closing program to preserver data integrity");
-    System.exit(1);
-  }
-
 }

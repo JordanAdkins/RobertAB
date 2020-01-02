@@ -11,7 +11,7 @@ public class CreateSavingAccount {
 
   public static int run(int userId) {
     log.trace("generating saving account number");
-    int savingNumber = (211456600 + userId);
+    int savingNumber = (211454300 + userId);
     PreparedStatement stmt;
     try {
       log.debug("Attempting to insert account information into database using SQL");

@@ -3,6 +3,7 @@ package com.revature.controller;
 import java.sql.Connection;
 import org.apache.log4j.Logger;
 import com.revature.controller.menus.CreateAccountMenu;
+import com.revature.controller.menus.DepositMoneyMenu;
 import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
 import com.revature.controller.menus.StartMenu;
@@ -55,6 +56,10 @@ public class Controller {
         currentMenu = new UserDashboardMenu();
         currentMenu.start();
         break;
+      }
+      case 4: {
+        currentMenu = new DepositMoneyMenu();
+        currentMenu.start();
       }
       default: {
         throw new MenuFailedException();

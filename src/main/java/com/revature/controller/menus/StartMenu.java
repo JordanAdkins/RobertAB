@@ -12,7 +12,7 @@ public class StartMenu implements Menu {
 
   public StartMenu() {
     super();
-    log.trace("Login Menu Created");
+    log.trace("Start Menu Created");
   }
 
   public static int getMenuId() {

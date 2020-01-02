@@ -31,7 +31,6 @@ public class RequestUsername {
               + " is already taken, please enter a different username");
           continue;
         }
-        System.out.println("succcess");
       } catch (SQLException e) {
       }
       log.debug("Username " + retrievedString + " is unique");

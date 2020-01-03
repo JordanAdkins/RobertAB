@@ -23,7 +23,7 @@ public class LoginMenu implements Menu {
     return 1;
   }
   
-  private Boolean validateUsername(String username) {
+  public boolean validateUsername(String username) {
     log.trace("Attempting to validate username");
     PreparedStatement stmt;
     try {

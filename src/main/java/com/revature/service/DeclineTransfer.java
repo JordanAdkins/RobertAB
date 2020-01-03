@@ -7,16 +7,19 @@ import org.apache.log4j.Logger;
 import com.revature.controller.Controller;
 
 public class DeclineTransfer {
-  
+
   private static Logger log = Logger.getLogger(DeclineTransfer.class);
 
 
   public static boolean run() {
     log.trace("Running Decline Transfer Service");
     System.out.println("You have chosen to decline this transfer");
+    LogTransaction.saveReturn("Returned Transfer",
+        Controller.CurrentUser.getPendingTransferAccount(),
+        Controller.CurrentUser.getPendingTransferAmount());
     try {
-      PreparedStatement stmt = Controller.connection.prepareStatement(
-          "SELECT * FROM account_numbers WHERE account_number = ?");
+      PreparedStatement stmt = Controller.connection
+          .prepareStatement("SELECT * FROM account_numbers WHERE account_number = ?");
       stmt.setInt(1, Controller.CurrentUser.getPendingTransferAccount());
       stmt.execute();
       log.debug("SQL success");
@@ -34,10 +37,10 @@ public class DeclineTransfer {
       Controller.CurrentUser.setHasPendingTransfer(false);
       Controller.CurrentUser.setPendingTransferAccount(0);
       Controller.CurrentUser.setPendingTransferAmount(0);
-      stmt = Controller.connection.prepareStatement(
-          "UPDATE user_information SET user_haspendingtransfer = FALSE, "
-          + "user_pendingTransfersender = NULL, user_pendingtransferamount = NULL,"
-          +  " user_pendingtransferaccount = NULL WHERE user_id = ?;");
+      stmt = Controller.connection
+          .prepareStatement("UPDATE user_information SET user_haspendingtransfer = FALSE, "
+              + "user_pendingTransfersender = NULL, user_pendingtransferamount = NULL,"
+              + " user_pendingtransferaccount = NULL WHERE user_id = ?;");
       stmt.setInt(1, Controller.CurrentUser.getUserId());
       stmt.execute();
       log.debug("Cleared Pending Transfer from account");
@@ -47,7 +50,7 @@ public class DeclineTransfer {
       System.exit(1);
     }
     return false;
-    
+
   }
 
 }

@@ -8,6 +8,7 @@ import com.revature.controller.menus.ExternalAccountsTransferMenu;
 import com.revature.controller.menus.InternalTransferMenu;
 import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
+import com.revature.controller.menus.PendingTransferManagmentMenu;
 import com.revature.controller.menus.StartMenu;
 import com.revature.controller.menus.UserDashboardMenu;
 import com.revature.controller.menus.WithdrawMoneyMenu;
@@ -19,7 +20,7 @@ public class Controller {
 
   public static Connection connection = null;
 
-  private static Menu currentMenu;
+  public static Menu currentMenu;
   
   public static User CurrentUser;
 
@@ -77,6 +78,10 @@ public class Controller {
       }
       case 7: {
         currentMenu = new ExternalAccountsTransferMenu();
+        currentMenu.start();
+      }
+      case 8: {
+        currentMenu = new PendingTransferManagmentMenu();
         currentMenu.start();
       }
       default: {

@@ -42,12 +42,12 @@ public class UserDashboardMenu implements Menu {
     if (Controller.CurrentUser.isUserHasCheckingAccount()) {
       System.out.println("Your Checking Account ending in "
           + (Controller.CurrentUser.getUserCheckingAccountNumber() - 411450000)
-          + " Has a balance of: " + Controller.CurrentUser.getUserCheckingAccountBalance());
+          + " Has a balance of: $" + Controller.CurrentUser.getUserCheckingAccountBalance());
     }
     if (Controller.CurrentUser.isUserHasSavingAccount()) {
       System.out.println("Your Saving Account ending in "
           + (Controller.CurrentUser.getUserSavingAccountNumber() - 211450000)
-          + " Has a balance of: " + Controller.CurrentUser.getUserSavingAccountBalance());
+          + " Has a balance of: $" + Controller.CurrentUser.getUserSavingAccountBalance());
     }
     if (Controller.CurrentUser.isHasPendingTransfer()) {
       System.out.println("You have a transfer Pending from "
@@ -115,8 +115,8 @@ public class UserDashboardMenu implements Menu {
             System.out.println("Checking Account successfully created. Returning to Dashboard");
             this.start();
           }
-          if (inputAsInt == 6 & Controller.CurrentUser.isHasPendingTransfer()) {
-            
+          if (inputAsInt == 6 & Controller.CurrentUser.isHasPendingTransfer()) { 
+            Controller.moveToMenu(PendingTransferManagmentMenu.getMenuId());
           }
           log.error("Invalid Selection was made, trying again");
           System.out.println("Please make a valid Selection");

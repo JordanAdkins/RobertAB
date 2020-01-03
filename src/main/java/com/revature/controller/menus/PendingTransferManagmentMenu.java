@@ -3,6 +3,7 @@ package com.revature.controller.menus;
 import org.apache.log4j.Logger;
 import com.revature.controller.Controller;
 import com.revature.exception.MenuFailedException;
+import com.revature.service.AcceptTransfer;
 import com.revature.service.DeclineTransfer;
 import com.revature.service.ScanForUserInput;
 
@@ -12,6 +13,9 @@ public class PendingTransferManagmentMenu implements Menu {
 
   public PendingTransferManagmentMenu() {
     log.trace("Pending Transfer Menu Created");
+  }
+  public static int getMenuId() {
+    return 8;
   }
 
   @Override
@@ -31,7 +35,7 @@ public class PendingTransferManagmentMenu implements Menu {
       String inputedString = ScanForUserInput.getUserInputStream();
       log.trace("Input received");
       if (inputedString.equals("1")) {
-        // stuff
+        AcceptTransfer.run();
       }
       if (inputedString.equals("2")) {
         if(DeclineTransfer.run()) {

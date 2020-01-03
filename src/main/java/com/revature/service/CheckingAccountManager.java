@@ -41,7 +41,7 @@ public class CheckingAccountManager {
       try {
         double amountToDeposit = Double.parseDouble(depositAmountString);
         if (amountToDeposit > 0) {
-          if (amountToDeposit < 50000) {
+          if (amountToDeposit <= 50000) {
             System.out.println("To confirm, you would like to deposit: $" + amountToDeposit
                 + " into your checking account #"
                 + Controller.CurrentUser.getUserCheckingAccountNumber());
@@ -57,6 +57,7 @@ public class CheckingAccountManager {
               stmt.setInt(2, Controller.CurrentUser.getUserCheckingAccountNumber());
               log.debug("Attempting to update database with new balance");
               stmt.execute();
+              LogTransaction.saveChecking("Deposit", amountToDeposit);
               System.out.println(amountToDeposit + " successfully deposited");
               return true;
             } else {
@@ -116,7 +117,7 @@ public class CheckingAccountManager {
       try {
         double amountToWithdraw = Double.parseDouble(withdrawAmountString);
         if (amountToWithdraw > 0) {
-          if (amountToWithdraw < 5000) {
+          if (amountToWithdraw <= 5000) {
             System.out.println("To confirm, you would like to withdraw: $" + amountToWithdraw
                 + " from your checking account #"
                 + Controller.CurrentUser.getUserCheckingAccountNumber());
@@ -133,6 +134,7 @@ public class CheckingAccountManager {
                 stmt.setInt(2, Controller.CurrentUser.getUserCheckingAccountNumber());
                 log.debug("Attempting to update database with new balance");
                 stmt.execute();
+                LogTransaction.saveChecking("Withdraw", (amountToWithdraw * -1));
                 System.out.println(amountToWithdraw + " successfully withdrawn");
                 return true;
               } else {
@@ -198,7 +200,7 @@ public class CheckingAccountManager {
       try {
         double amountToWithdraw = Double.parseDouble(withdrawAmountString);
         if (amountToWithdraw > 0) {
-          if (amountToWithdraw < 5000) {
+          if (amountToWithdraw <= 5000) {
             System.out.println("To confirm, you would like to transfer: $" + amountToWithdraw
                 + " FROM your checking account #"
                 + Controller.CurrentUser.getUserCheckingAccountNumber());
@@ -219,12 +221,14 @@ public class CheckingAccountManager {
                 stmt.setInt(2, Controller.CurrentUser.getUserCheckingAccountNumber());
                 log.debug("Attempting to update database with new checking balance");
                 stmt.execute();
+                LogTransaction.saveChecking("Transfer to Saving", (amountToWithdraw * -1));
                 stmt = Controller.connection.prepareStatement(
                     "UPDATE account_numbers SET account_balance = ? WHERE account_number = ?;");
                 stmt.setDouble(1, Controller.CurrentUser.getUserSavingAccountBalance());
                 stmt.setInt(2, Controller.CurrentUser.getUserSavingAccountNumber());
                 log.debug("Attempting to update database with new Saving balance");
                 stmt.execute();
+                LogTransaction.saveSaving("Transfer From Checking", amountToWithdraw);
                 System.out.println(amountToWithdraw + " successfully transfered");
                 return true;
               } else {

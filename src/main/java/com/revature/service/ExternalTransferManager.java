@@ -89,6 +89,8 @@ public class ExternalTransferManager {
                 stmt.setInt(2, Controller.CurrentUser.getUserCheckingAccountNumber());
                 log.debug("Attempting to update database with new checking balance");
                 stmt.execute();
+                LogTransaction.saveChecking(("Transfered to " + usernameOfReceipt),
+                    (amountToWithdraw * -1));
                 log.debug("success");
                 log.debug("Attempting to update database with transfer information");
                 stmt = Controller.connection
@@ -214,6 +216,7 @@ public class ExternalTransferManager {
                 stmt.setInt(2, Controller.CurrentUser.getUserSavingAccountNumber());
                 log.debug("Attempting to update database with new saving balance");
                 stmt.execute();
+                LogTransaction.saveSaving(("Transfer to: " + usernameOfReceipt),(amountToWithdraw * -1));
                 log.debug("success");
                 log.debug("Attempting to update database with transfer information");
                 stmt = Controller.connection

@@ -10,6 +10,7 @@ import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
 import com.revature.controller.menus.PendingTransferManagmentMenu;
 import com.revature.controller.menus.StartMenu;
+import com.revature.controller.menus.TransactionHistoryMenu;
 import com.revature.controller.menus.UserDashboardMenu;
 import com.revature.controller.menus.WithdrawMoneyMenu;
 import com.revature.exception.MenuFailedException;
@@ -79,11 +80,19 @@ public class Controller {
       case 7: {
         currentMenu = new ExternalAccountsTransferMenu();
         currentMenu.start();
+        break;
       }
       case 8: {
         currentMenu = new PendingTransferManagmentMenu();
         currentMenu.start();
+        break;
       }
+      case 9: {
+        currentMenu = new TransactionHistoryMenu();
+        currentMenu.start();
+        break;
+      }
+      
       default: {
         throw new MenuFailedException();
       }

@@ -89,6 +89,7 @@ public class UserDashboardMenu implements Menu {
             Controller.moveToMenu(WithdrawMoneyMenu.getMenuId());
           }
           if (inputAsInt == 3) {
+            Controller.moveToMenu(TransactionHistoryMenu.getMenuId());
           }
           if (inputAsInt == 4) {
             Controller.moveToMenu(ExternalAccountsTransferMenu.getMenuId());

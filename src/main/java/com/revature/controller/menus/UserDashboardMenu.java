@@ -50,7 +50,7 @@ public class UserDashboardMenu implements Menu {
           + " Has a balance of: " + Controller.CurrentUser.getUserSavingAccountBalance());
     }
     if (Controller.CurrentUser.isHasPendingTransfer()) {
-      System.out.println("You have a trasnfer Pending from "
+      System.out.println("You have a transfer Pending from "
           + Controller.CurrentUser.getPendingTransferSenderName());
     }
     System.out.println("What would you like to do?");
@@ -70,6 +70,9 @@ public class UserDashboardMenu implements Menu {
     if (!Controller.CurrentUser.isUserHasCheckingAccount()
         & Controller.CurrentUser.isUserHasSavingAccount()) {
       System.out.println("5:) Create a Checking Account");
+    }
+    if (Controller.CurrentUser.isHasPendingTransfer()) {
+      System.out.println("6:) Manage Pending Transfer");
     }
     boolean lookingForInput = true;
     while (lookingForInput) {
@@ -111,6 +114,9 @@ public class UserDashboardMenu implements Menu {
             Controller.CurrentUser.setUserHasCheckingAccount(true);
             System.out.println("Checking Account successfully created. Returning to Dashboard");
             this.start();
+          }
+          if (inputAsInt == 6 & Controller.CurrentUser.isHasPendingTransfer()) {
+            
           }
           log.error("Invalid Selection was made, trying again");
           System.out.println("Please make a valid Selection");

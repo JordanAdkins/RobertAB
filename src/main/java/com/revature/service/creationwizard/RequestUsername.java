@@ -13,12 +13,19 @@ public class RequestUsername {
 
   public static String run() {
     String username = "";
+    String usernamePattern = ".{8,20}";
     System.out.println(
-        "Please enter your desired Username (Please be aware that Usernames ARE case-sensitive");
+        "Please enter your desired Username (Please note that Usernames ARE case-sensitive)");
+    System.out.println("Username must be between 8-20 characters");
     while (true) {
       log.trace("Requesting Username");
       String retrievedString = ScanForUserInput.getUserInputStream();
       log.trace("Input Received");
+      if (!retrievedString.matches(usernamePattern)) {
+        System.out.println(
+            "The username you have entered does not fit our requirments, please try again");
+        continue;
+      }
       try {
         PreparedStatement stmt = Controller.connection
             .prepareStatement("SELECT * FROM user_information WHERE user_userid = ?");

@@ -22,6 +22,18 @@ public class UserDashboardMenu implements Menu {
   @Override
   public void start() {
     log.trace("UserDashBoardMenu started");
+    System.out.println("Dashboard Loading");
+    try {
+      for (int i = 0; i < 8; ++i) {
+        Thread.sleep(500);
+        System.out.print(".");
+      }
+    } catch (InterruptedException e1) {
+      log.debug("failed to sleep");
+    }
+    log.trace("'Clearing' the screen");
+    for (int i = 0; i < 30; ++i)
+      System.out.println();
     System.out.println("Welcome to your Dashboard, " + Controller.CurrentUser.getUserName() + ",");
     if (!Controller.CurrentUser.isUserHasCheckingAccount()
         & !Controller.CurrentUser.isUserHasSavingAccount()) {
@@ -36,6 +48,10 @@ public class UserDashboardMenu implements Menu {
       System.out.println("Your Saving Account ending in "
           + (Controller.CurrentUser.getUserSavingAccountNumber() - 211450000)
           + " Has a balance of: " + Controller.CurrentUser.getUserSavingAccountBalance());
+    }
+    if (Controller.CurrentUser.isHasPendingTransfer()) {
+      System.out.println("You have a trasnfer Pending from "
+          + Controller.CurrentUser.getPendingTransferSenderName());
     }
     System.out.println("What would you like to do?");
     System.out.println("0:) Logout");
@@ -72,7 +88,7 @@ public class UserDashboardMenu implements Menu {
           if (inputAsInt == 3) {
           }
           if (inputAsInt == 4) {
-            Controller.moveToMenu(MenuId);
+            Controller.moveToMenu(ExternalAccountsTransferMenu.getMenuId());
           }
           if (inputAsInt == 5 & Controller.CurrentUser.isUserHasCheckingAccount()
               & Controller.CurrentUser.isUserHasSavingAccount()) {

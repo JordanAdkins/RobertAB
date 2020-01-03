@@ -4,6 +4,7 @@ import java.sql.Connection;
 import org.apache.log4j.Logger;
 import com.revature.controller.menus.CreateAccountMenu;
 import com.revature.controller.menus.DepositMoneyMenu;
+import com.revature.controller.menus.ExternalAccountsTransferMenu;
 import com.revature.controller.menus.InternalTransferMenu;
 import com.revature.controller.menus.LoginMenu;
 import com.revature.controller.menus.Menu;
@@ -73,6 +74,10 @@ public class Controller {
         currentMenu = new InternalTransferMenu();
         currentMenu.start();
         break;
+      }
+      case 7: {
+        currentMenu = new ExternalAccountsTransferMenu();
+        currentMenu.start();
       }
       default: {
         throw new MenuFailedException();

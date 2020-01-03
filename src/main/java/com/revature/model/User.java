@@ -15,6 +15,10 @@ public class User {
   private boolean userHasCheckingAccount = false;
   private double userCheckingAccountBalance;
   private double userSavingAccountBalance;
+  private boolean hasPendingTransfer = false;
+  private String pendingTransferSenderName = "";
+  private double pendingTransferAmount = 0;
+  private int pendingTransferAccount = 0;
 
   
 
@@ -244,6 +248,46 @@ public class User {
    */
   public void setUserSavingAccountBalance(double d) {
     this.userSavingAccountBalance = d;
+  }
+
+
+  public boolean isHasPendingTransfer() {
+    return hasPendingTransfer;
+  }
+
+
+  public void setHasPendingTransfer(boolean hasPendingTransfer) {
+    this.hasPendingTransfer = hasPendingTransfer;
+  }
+
+
+  public String getPendingTransferSenderName() {
+    return pendingTransferSenderName;
+  }
+
+
+  public void setPendingTransferSenderName(String pendingTransferSenderName) {
+    this.pendingTransferSenderName = pendingTransferSenderName;
+  }
+
+
+  public double getPendingTransferAmount() {
+    return pendingTransferAmount;
+  }
+
+
+  public void setPendingTransferAmount(double pendingTransferAmount) {
+    this.pendingTransferAmount = pendingTransferAmount;
+  }
+
+
+  public int getPendingTransferAccount() {
+    return pendingTransferAccount;
+  }
+
+
+  public void setPendingTransferAccount(int pendingTransferAccount) {
+    this.pendingTransferAccount = pendingTransferAccount;
   }
 
 

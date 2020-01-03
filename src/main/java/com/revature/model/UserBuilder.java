@@ -27,6 +27,10 @@ public class UserBuilder {
     double userSavingAccountBalance = 0;
     String CheckingCheck = "Checking";
     String SavingCheck = "Saving";
+    boolean userHasPendingTransfer = false;
+    String pendingTransferSenderName = "";
+    double pendingTransferAmount = 0;
+    int pendingTransferAccount = 0;
 
     PreparedStatement stmt;
     try {
@@ -41,6 +45,10 @@ public class UserBuilder {
       userName = rs.getString(4);
       userQuestionId = rs.getInt(5);
       userQuestionAnswer = rs.getString(6);
+      userHasPendingTransfer = rs.getBoolean(7);
+      pendingTransferSenderName = rs.getString(8);
+      pendingTransferAmount = rs.getDouble(9);
+      pendingTransferAccount = rs.getInt(10);
       log.debug("Successfully obtained information from user_information table");
       stmt = Controller.connection.prepareStatement("SELECT * FROM ssid_table WHERE userid = ?");
       stmt.setInt(1, userId);
@@ -74,6 +82,12 @@ public class UserBuilder {
       User BuiltUser = new User(userId, userLoginId, userPassword, userName, userQuestionId, userQuestionAnswer,
           userSSID, userCheckingAccountNumber, userSavingAccountNumber, userHasSavingAccount,
           userHasCheckingAccount, userCheckingAccountBalance, userSavingAccountBalance);
+      if(userHasPendingTransfer) {
+        BuiltUser.setHasPendingTransfer(userHasPendingTransfer);
+        BuiltUser.setPendingTransferSenderName(pendingTransferSenderName);
+        BuiltUser.setPendingTransferAmount(pendingTransferAmount);
+        BuiltUser.setPendingTransferAccount(pendingTransferAccount);
+      }
       return BuiltUser;
     } catch (SQLException e) {
       log.fatal("failed to obtain information from database, returning to start menu");

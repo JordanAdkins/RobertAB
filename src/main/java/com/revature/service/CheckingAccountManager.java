@@ -26,6 +26,9 @@ public class CheckingAccountManager {
         }
         // 46 is ASCII for '.'
         if (x == 46) {
+          if(decimalPlaced == true) {
+            continue;
+          }
           depositAmountString = (depositAmountString + x);
           decimalPlaced = true;
           continue;
